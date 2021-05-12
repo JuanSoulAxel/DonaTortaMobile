@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 import './step_form.dart';
+import './home_page.dart';
+import './login_page.dart';
+import './home_page_fritos.dart';
+
+/*GERAL:
+esse arquivo é responsável somente por chamar a página inicial do site
+*/
 
 void main() {
   //runApp executa o widget inicial
@@ -15,9 +22,17 @@ class Main extends StatelessWidget {
     return MaterialApp(
       //título do app
       title: 'Dona Torta Caruaru',
-
       //home é o widget inicial, a página que vamos chamar primeiro quando o app for iniciado
-      home: StepForm(),
+
+      //Definindo a rota inicial
+      initialRoute: '/',
+      //Para trabalhar com as Rotas Noemadas utiliza-se:
+      routes: {
+        '/': (context) => StepForm(),
+        '/home': (context) => HomePage(),
+        '/login': (context) => LoginPage(),
+        '/salgados-fritos': (context) => ListarSalgadosFritos(),
+      },
     );
   }
 }

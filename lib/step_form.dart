@@ -1,10 +1,8 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 
-import './page_indicator.dart';
-
-import './page_body.dart';
+/*GERAL:
+esse arquivo ele é responsável por chamar a tela de etapas e ir modificando a cada clique nos botões anterior e próximo
+*/
 
 //como vamos fazer o controle de estado de variável vamos fazer desse StepForm um statefulwidget
 class StepForm extends StatefulWidget {
@@ -30,7 +28,7 @@ class _StepFormState extends State<StepForm> {
       'Salgados Fritos',
     ),
 
-    //Passando o segundo array = 1
+    //Passando  o segundo array = 1
     pageBody(
       'https://static.wixstatic.com/media/0a620d_06cedd868c084aff82110f3b31ec1212~mv2_d_1400_1400_s_2.png/v1/fill/w_332,h_332,al_c,q_85,usm_0.66_1.00_0.01/bal%C3%B5es_assados.webp',
       'Salgados Assados',
@@ -75,6 +73,12 @@ class _StepFormState extends State<StepForm> {
         curve: Curves.easeIn,
       );
     }
+
+    //se o usuário já estiver na página final e clicar em próximo vai para a pagehome
+    else if (_page == 2 && nextPage) {
+      //passando a nova página por rota automática
+      Navigator.of(context).pushReplacementNamed("/home");
+    }
   }
 
   @override
@@ -83,6 +87,7 @@ class _StepFormState extends State<StepForm> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Dona Torta Caruaru'),
+        backgroundColor: Colors.deepOrange,
       ),
 
       //no body (corpo) vamos exibir uma página que contém outras páginas dentro dela
@@ -112,6 +117,7 @@ class _StepFormState extends State<StepForm> {
           FlatButton(
             //passando valor false para função _changeStep
             onPressed: () => _changeStep(false),
+            color: Colors.deepOrangeAccent,
             child: Text('Anterior'),
           ),
 
@@ -124,10 +130,63 @@ class _StepFormState extends State<StepForm> {
           FlatButton(
             //passando valor true para função _changeStep
             onPressed: () => _changeStep(true),
+            color: Colors.deepOrangeAccent,
             child: Text('Próximo'),
           ),
         ],
       ),
     );
   }
+}
+
+/*GERAL:
+esse arquivo vai verificar qual é a tela que o usuário está e modificar alguns requisitos específicos quando estiver em determinada página
+*/
+
+//criar função que retorna um widget
+//no construtor recebemos um valor boolean para dizer se estamos criando um widget e se é a página principal
+Widget pageIndicator(bool currentPage) {
+  return Container(
+    //utilizando operador ternário. Se estiver na currentPage o valor vai ser maior = 15 e se não estiver na currentPage vai ser menor = 10
+    width: currentPage ? 15 : 10,
+    height: currentPage ? 15 : 10,
+
+    decoration: BoxDecoration(
+      //o raio é 12
+      borderRadius: BorderRadius.circular(12),
+
+      //utilizando novamente operador ternário. Se estiver na currentPage passa um valor mais escuro, se não estiver na currentPage passa um valor mais claro do preto
+      color: currentPage ? Colors.deepOrange : Colors.orangeAccent,
+    ),
+  );
+}
+
+/*GERAL:
+esse arquivo vai pegar dois parâmetros (imagem e titulo) passado pelo stepForm e modificar seu atributos
+*/
+
+Widget pageBody(String imgUrl, String title) {
+  //criando padding para dar espaçamento
+  return Padding(
+    padding: const EdgeInsets.all(20.0),
+    child: Column(
+      //Elementos exebidos na coluna estejam alinhados ao centro da tela
+      mainAxisAlignment: MainAxisAlignment.center,
+
+      children: [
+        //recebendo imagem no imgUrl
+        Image.network(imgUrl),
+
+        //Texto da variável titulo
+        Text(
+          title,
+          style: TextStyle(
+            fontSize: 30,
+            color: Colors.deepOrange,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
+    ),
+  );
 }
