@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import './step_form.dart';
-import './home_page.dart';
-import './login_page.dart';
-import './home_page_fritos.dart';
+import 'tela_etapas.dart';
+import 'inicial.dart';
+import 'login.dart';
+import 'menu.dart';
 
 /*GERAL:
 esse arquivo é responsável somente por chamar a página inicial do site
@@ -28,10 +28,10 @@ class Main extends StatelessWidget {
       initialRoute: '/',
       //Para trabalhar com as Rotas Noemadas utiliza-se:
       routes: {
-        '/': (context) => StepForm(),
-        '/home': (context) => HomePage(),
-        '/login': (context) => LoginPage(),
-        '/salgados-fritos': (context) => ListarSalgadosFritos(),
+        '/': (context) => TelaEtapas(),
+        '/home': (context) => Inicial(),
+        '/login': (context) => Login(),
+        '/menu': (context) => Menu(),
       },
     );
   }
